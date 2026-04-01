@@ -1,0 +1,202 @@
+kind: DataContract
+apiVersion: v3.0.0
+id: week3-document-refinery-extractions
+info:
+  title: Week 3 Document Refinery - Extraction Records
+  version: 1.0.0
+  owner: extraction-team
+  description: One record per processed document with extracted facts and entities.
+    Confidence MUST be float in [0.0, 1.0].
+  maintainers:
+  - data-quality@example.com
+  tags:
+  - extraction
+  - nlp
+  - confidence
+servers:
+  local:
+    type: local
+    path: outputs/week3/extractions.jsonl
+    format: jsonl
+terms:
+  usage: Internal inter-system data contract
+  limitations: confidence must remain in [0.0, 1.0] float range
+  sla:
+    freshness: 24 hours
+    availability: 99.9%
+schema:
+  doc_id:
+    type: string
+    format: uuid
+    required: true
+    unique: true
+    description: Primary key, UUIDv4
+    example: 123e4567-e89b-12d3-a456-426614174000
+  source_path:
+    type: string
+    required: true
+    minLength: 1
+    description: Absolute path or URL to source document
+  source_hash:
+    type: string
+    pattern: ^[a-f0-9]{64}$
+    required: true
+    description: SHA-256 of source file
+  extracted_facts:
+    type: array
+    minItems: 1
+    required: true
+    description: Array of facts extracted from the document
+    items:
+      type: object
+      required:
+      - fact_id
+      - text
+      - confidence
+      properties:
+        fact_id:
+          type: string
+          format: uuid
+          description: Unique fact identifier
+        text:
+          type: string
+          minLength: 1
+          maxLength: 5000
+          description: Extracted fact text
+        entity_refs:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: References to entities
+        confidence:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+          required: true
+          description: Confidence score in [0.0, 1.0] - BREAKING if changed to 0-100
+        page_ref:
+          type: integer
+          minimum: 1
+          nullable: true
+          description: Page number where fact was found
+        source_excerpt:
+          type: string
+          maxLength: 1000
+          description: Verbatim source text
+  entities:
+    type: array
+    required: true
+    items:
+      type: object
+      required:
+      - entity_id
+      - name
+      - type
+      properties:
+        entity_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+        type:
+          type: string
+          enum:
+          - PERSON
+          - ORG
+          - LOCATION
+          - DATE
+          - AMOUNT
+          - OTHER
+        canonical_value:
+          type: string
+  extraction_model:
+    type: string
+    required: true
+    pattern: ^(claude|gpt|llama)-[a-z0-9-]+$
+    description: Model identifier
+  processing_time_ms:
+    type: integer
+    minimum: 0
+    maximum: 300000
+    required: true
+  token_count:
+    type: object
+    required: true
+    properties:
+      input:
+        type: integer
+        minimum: 0
+      output:
+        type: integer
+        minimum: 0
+  extracted_at:
+    type: string
+    format: date-time
+    required: true
+quality:
+  type: SodaChecks
+  specification:
+    checks for extractions:
+    - missing_doc_id:
+        condition: missing_count(doc_id) = 0
+        severity: CRITICAL
+    - duplicate_doc_id:
+        condition: duplicate_count(doc_id) = 0
+        severity: CRITICAL
+    - missing_source_hash:
+        condition: missing_count(source_hash) = 0
+        severity: HIGH
+    - confidence_range:
+        condition: confidence BETWEEN 0.0 AND 1.0
+        severity: CRITICAL
+        description: Confidence must be float in [0.0, 1.0]
+    - confidence_type:
+        condition: typeof(confidence) = 'float'
+        severity: CRITICAL
+        description: Confidence must be float, not integer
+    - confidence_not_null:
+        condition: missing_count(confidence) = 0
+        severity: CRITICAL
+    - entity_reference_validity:
+        condition: every entity_refs item exists in entities[].entity_id
+        severity: HIGH
+    - min_confidence_floor:
+        condition: min(confidence) >= 0.0
+        severity: HIGH
+    - max_confidence_ceiling:
+        condition: max(confidence) <= 1.0
+        severity: HIGH
+    - processing_time_positive:
+        condition: processing_time_ms >= 0
+        severity: MEDIUM
+    - confidence_statistical_drift:
+        warn_condition: abs(mean(confidence) - 0.850) > 2*0.100
+        fail_condition: abs(mean(confidence) - 0.850) > 3*0.100
+        severity: HIGH
+        description: "Detects silent corruption like 0.0-1.0 \u2192 0-100 scale change"
+    - row_count_minimum:
+        condition: row_count >= 50
+        severity: MEDIUM
+lineage:
+  upstream: []
+  downstream:
+  - id: week4-cartographer
+    fields_consumed:
+    - doc_id
+    - extracted_facts
+    - confidence
+    breaking_if_changed:
+    - confidence
+  - id: week5-event-sourcing
+    fields_consumed:
+    - doc_id
+    - extracted_facts
+    breaking_if_changed:
+    - doc_id
+  - id: week2-digital-courtroom
+    fields_consumed:
+    - confidence
+    breaking_if_changed:
+    - confidence

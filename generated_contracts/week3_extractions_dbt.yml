@@ -1,0 +1,49 @@
+version: 2
+models:
+- name: week3_extractions
+  description: Document extraction records with confidence scores
+  tests:
+  - dbt_utils.unique_combination_of_columns:
+      combination_of_columns:
+      - doc_id
+  columns:
+  - name: doc_id
+    tests:
+    - not_null
+    - unique
+    - dbt_utils.uuid_type
+  - name: source_path
+    tests:
+    - not_null
+    - dbt_utils.not_empty_string
+  - name: source_hash
+    tests:
+    - not_null
+    - dbt_utils.accepted_range:
+        min_value: 64
+        max_value: 64
+  - name: confidence
+    tests:
+    - not_null
+    - dbt_utils.accepted_range:
+        min_value: 0.0
+        max_value: 1.0
+    - dbt_utils.expression_is_true:
+        expression: confidence = CAST(confidence AS FLOAT)
+  - name: extraction_model
+    tests:
+    - not_null
+    - accepted_values:
+        values:
+        - claude-3-5-sonnet
+        - gpt-4
+        - llama-3
+  - name: processing_time_ms
+    tests:
+    - not_null
+    - dbt_utils.accepted_range:
+        min_value: 0
+        max_value: 300000
+  - name: extracted_at
+    tests:
+    - not_null
