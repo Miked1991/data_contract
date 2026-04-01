@@ -1,8 +1,6 @@
 # DOMAIN_NOTES.md - Data Contract Enforcer
 
-## Week 7: Schema Integrity & Lineage Attribution System
-
-### 1. Backward-Compatible vs Breaking Schema Changes
+## 1. Backward-Compatible vs Breaking Schema Changes
 
 ## Understanding Schema Evolution in My Systems
 
