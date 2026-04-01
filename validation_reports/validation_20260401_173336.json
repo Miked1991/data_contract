@@ -1,0 +1,73 @@
+{
+  "report_id": "33f3c9a3-985d-45be-9c17-0d82a89d5de6",
+  "contract_id": "extraction_ledger-contract",
+  "snapshot_id": "77003ac9105d7581b6d0abac97c11d72447f5e771c5a058f5ad1ba396fce67e0",
+  "run_timestamp": "2026-04-01T17:33:36.502086",
+  "total_checks": 5,
+  "passed": 3,
+  "failed": 0,
+  "warned": 0,
+  "errored": 0,
+  "results": [
+    {
+      "check_id": "confidence.range",
+      "column_name": "confidence",
+      "check_type": "range",
+      "status": "PASS",
+      "actual_value": "min=0.8500, max=0.8500, mean=0.8500",
+      "expected": "min=0.0, max=1.0",
+      "severity": "INFO",
+      "records_failing": 0,
+      "sample_failing": [],
+      "message": "All confidence values within range"
+    },
+    {
+      "check_id": "confidence.type",
+      "column_name": "confidence",
+      "check_type": "type",
+      "status": "PASS",
+      "actual_value": "all floats",
+      "expected": "float (0.0-1.0)",
+      "severity": "INFO",
+      "records_failing": 0,
+      "sample_failing": [],
+      "message": "All confidence values are floats"
+    },
+    {
+      "check_id": "sequence_number.order",
+      "column_name": "sequence_number",
+      "check_type": "sequence",
+      "status": "SKIP",
+      "actual_value": "no sequence numbers",
+      "expected": "monotonically increasing",
+      "severity": "INFO",
+      "records_failing": 0,
+      "sample_failing": [],
+      "message": "No sequence numbers found to check"
+    },
+    {
+      "check_id": "time_order",
+      "column_name": "occurred_at/recorded_at",
+      "check_type": "temporal",
+      "status": "PASS",
+      "actual_value": "all records have recorded_at >= occurred_at",
+      "expected": "recorded_at >= occurred_at",
+      "severity": "INFO",
+      "records_failing": 0,
+      "sample_failing": [],
+      "message": "Time order is correct"
+    },
+    {
+      "check_id": "confidence.statistical_drift",
+      "column_name": "confidence",
+      "check_type": "statistical",
+      "status": "INFO",
+      "actual_value": "mean=0.8500, std=0.0000",
+      "expected": "baseline not established",
+      "severity": "INFO",
+      "records_failing": 0,
+      "sample_failing": [],
+      "message": "First validation run - baseline saved for future drift detection"
+    }
+  ]
+}

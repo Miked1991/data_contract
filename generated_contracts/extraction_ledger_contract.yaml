@@ -1,0 +1,46 @@
+kind: DataContract
+apiVersion: v3.0.0
+id: extraction_ledger-contract
+info:
+  title: Document Extraction Contract
+  version: 1.0.0
+  owner: extraction-team
+  description: Contract for document extraction data
+servers:
+  local:
+    type: local
+    path: C:\Users\hp\Music\Document_intelligence_refine\.refinery\extraction_ledger.jsonl
+    format: jsonl
+schema:
+  confidence:
+    type: number
+    minimum: 0.0
+    maximum: 1.0
+    required: true
+    description: Confidence score MUST be between 0.0 and 1.0 (float, not integer
+      percentage)
+quality:
+  type: SodaChecks
+  specification:
+    checks:
+    - confidence_range:
+        condition: confidence BETWEEN 0.0 AND 1.0
+        severity: CRITICAL
+        description: Confidence must be float in [0.0, 1.0] - BREAKING if changed
+          to 0-100
+    - confidence_type:
+        condition: typeof(confidence) = 'float'
+        severity: CRITICAL
+        description: Confidence must be float, not integer
+lineage:
+  downstream:
+  - id: week4-cartographer
+    description: Cartographer consumes confidence for filtering low-quality facts
+    fields_consumed:
+    - confidence
+    breaking_if_changed:
+    - confidence
+  - id: week5-event-sourcing
+    description: Event sourcing may emit confidence-based events
+    fields_consumed:
+    - confidence
