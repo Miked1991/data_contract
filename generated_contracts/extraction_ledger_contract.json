@@ -3,15 +3,15 @@
   "apiVersion": "v3.0.0",
   "id": "extraction_ledger-contract",
   "info": {
-    "title": "Document Extraction Contract",
+    "title": "WEEK3 Data Contract",
     "version": "1.0.0",
-    "owner": "extraction-team",
-    "description": "Contract for document extraction data"
+    "owner": "data-team",
+    "description": "Auto-generated contract for week3 data"
   },
   "servers": {
     "local": {
       "type": "local",
-      "path": "C:\\Users\\hp\\Music\\Document_intelligence_refine\\.refinery\\extraction_ledger.jsonl",
+      "path": "outputs\\week3\\extractions.jsonl",
       "format": "jsonl"
     }
   },
@@ -32,7 +32,7 @@
           "confidence_range": {
             "condition": "confidence BETWEEN 0.0 AND 1.0",
             "severity": "CRITICAL",
-            "description": "Confidence must be float in [0.0, 1.0] - BREAKING if changed to 0-100"
+            "description": "Confidence must be in [0.0, 1.0] range"
           }
         },
         {
@@ -41,25 +41,35 @@
             "severity": "CRITICAL",
             "description": "Confidence must be float, not integer"
           }
+        },
+        {
+          "row_count": {
+            "condition": "COUNT(*) >= 50",
+            "severity": "MEDIUM",
+            "description": "At least 50 records required"
+          }
+        },
+        {
+          "statistical_warning": {
+            "condition": "mean_confidence BETWEEN 0.3 AND 0.9",
+            "severity": "HIGH",
+            "description": "Values outside [0.0, 1.0]: min=0.41, max=92.00"
+          }
         }
       ]
     }
   },
   "lineage": {
+    "upstream": [
+      {
+        "id": "source-data",
+        "description": "C:\\Users\\hp\\Music\\Document_intelligence_refine\\.refinery\\extraction_ledger.jsonl"
+      }
+    ],
     "downstream": [
       {
-        "id": "week4-cartographer",
-        "description": "Cartographer consumes confidence for filtering low-quality facts",
-        "fields_consumed": [
-          "confidence"
-        ],
-        "breaking_if_changed": [
-          "confidence"
-        ]
-      },
-      {
-        "id": "week5-event-sourcing",
-        "description": "Event sourcing may emit confidence-based events",
+        "id": "validation-system",
+        "description": "Contract validation system",
         "fields_consumed": [
           "confidence"
         ]
