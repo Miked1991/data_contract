@@ -1,0 +1,48 @@
+{
+  "kind": "DataContract",
+  "apiVersion": "v3.0.0",
+  "id": "lineage_graph-contract",
+  "info": {
+    "title": "WEEK4 Data Contract",
+    "version": "1.0.0",
+    "owner": "data-team",
+    "description": "Auto-generated contract for week4 data"
+  },
+  "servers": {
+    "local": {
+      "type": "local",
+      "path": "outputs\\week4\\data.jsonl",
+      "format": "jsonl"
+    }
+  },
+  "schema": {
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "required": true,
+      "description": "Confidence score MUST be between 0.0 and 1.0"
+    }
+  },
+  "quality": {
+    "type": "SodaChecks",
+    "specification": {
+      "checks": [
+        {
+          "confidence_range": {
+            "condition": "confidence BETWEEN 0.0 AND 1.0",
+            "severity": "CRITICAL",
+            "description": "Confidence must be in [0.0, 1.0] range"
+          }
+        },
+        {
+          "row_count": {
+            "condition": "COUNT(*) >= 50",
+            "severity": "MEDIUM",
+            "description": "At least 50 records required"
+          }
+        }
+      ]
+    }
+  }
+}
