@@ -1,0 +1,51 @@
+{
+  "report_id": "0beb64bc-224a-4027-b7b6-b76f2a761b72",
+  "contract_id": "week3-document-refinery-extractions",
+  "run_timestamp": "2026-04-03T18:50:15.762762",
+  "total_checks": 3,
+  "passed": 1,
+  "failed": 2,
+  "warned": 0,
+  "results": [
+    {
+      "check_id": "confidence.range",
+      "status": "FAIL",
+      "records_failing": 8,
+      "sample_failing": [
+        92.0,
+        92.0,
+        92.0,
+        73.0,
+        73.0
+      ],
+      "actual_value": "min=0.41, max=92.00",
+      "expected": "0.0-1.0",
+      "severity": "CRITICAL",
+      "message": "8 values outside range"
+    },
+    {
+      "check_id": "confidence.type",
+      "status": "FAIL",
+      "records_failing": 8,
+      "sample_failing": [
+        92.0,
+        92.0,
+        92.0,
+        73.0,
+        73.0
+      ],
+      "actual_value": "8 integer values",
+      "expected": "float",
+      "severity": "CRITICAL",
+      "message": "Found 8 integer confidence values (possibly 0-100 scale)"
+    },
+    {
+      "check_id": "confidence.drift",
+      "status": "PASS",
+      "severity": "INFO",
+      "actual_value": "mean=11.304",
+      "expected": "mean=11.304 \u00b1 3\u03c3",
+      "message": "Drift: 0.0 sigma"
+    }
+  ]
+}

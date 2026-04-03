@@ -1,0 +1,34 @@
+{
+  "report_id": "5174756518879828786",
+  "generated_at": "2026-04-03T18:54:23.609770",
+  "data_health_score": 33,
+  "narrative": "Poor data health. Critical violations need immediate remediation.",
+  "statistics": {
+    "total_validation_runs": 7,
+    "total_violations": 0,
+    "critical_violations": 0,
+    "high_violations": 0
+  },
+  "violations_this_week": {
+    "count": 0,
+    "by_severity": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0
+    },
+    "top_violations": []
+  },
+  "ai_risk_assessment": {
+    "embedding_drift": {},
+    "llm_output": {},
+    "overall_status": "UNKNOWN"
+  },
+  "recommended_actions": [
+    {
+      "priority": 3,
+      "action": "Add contract for Week 4 Cartographer lineage graph",
+      "details": "Currently partial coverage - add validation for nodes, edges, and relationship types",
+      "risk_reduction": "Prevents silent failures in lineage graph construction"
+    }
+  ]
+}

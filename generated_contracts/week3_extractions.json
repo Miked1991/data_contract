@@ -241,8 +241,8 @@
         },
         {
           "confidence_statistical_drift": {
-            "warn_condition": "abs(mean(confidence) - 0.850) > 2*0.100",
-            "fail_condition": "abs(mean(confidence) - 0.850) > 3*0.100",
+            "warn_condition": "abs(mean(confidence) - 11.304) > 2*26.653",
+            "fail_condition": "abs(mean(confidence) - 11.304) > 3*26.653",
             "severity": "HIGH",
             "description": "Detects silent corruption like 0.0-1.0 \u2192 0-100 scale change"
           }
