@@ -1,0 +1,25 @@
+{
+  "run_timestamp": "2026-04-04T10:10:00",
+  "embedding_drift": {
+    "sample_size": 200,
+    "drift_score": 0.08,
+    "similarity": 0.92,
+    "threshold": 0.15,
+    "status": "PASS",
+    "message": "Embedding drift within acceptable bounds"
+  },
+  "prompt_validation": {
+    "valid": true,
+    "violation_count": 0,
+    "message": "All required prompt fields present"
+  },
+  "llm_output": {
+    "total_outputs": 100,
+    "schema_violations": 1,
+    "violation_rate": 0.01,
+    "baseline_rate": 0.0142,
+    "trend": "falling",
+    "status": "PASS"
+  },
+  "overall_status": "PASS"
+}

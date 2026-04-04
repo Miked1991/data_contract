@@ -1,0 +1,51 @@
+kind: DataContract
+apiVersion: v3.0.0
+id: week5-event-sourcing-platform
+info:
+  title: Week 5 Event Sourcing Platform
+  version: 1.0.0
+  owner: events-team
+  description: Immutable event records for event sourcing
+  tags: [event-sourcing, audit]
+compatibility: full
+schema:
+  event_id:
+    type: string
+    format: uuid
+    required: true
+    unique: true
+  event_type:
+    type: string
+    required: true
+    enum: [DocumentProcessed, ExtractionCompleted, ValidationFailed]
+  sequence_number:
+    type: integer
+    minimum: 1
+    required: true
+  occurred_at:
+    type: string
+    format: date-time
+    required: true
+  recorded_at:
+    type: string
+    format: date-time
+    required: true
+quality:
+  type: SodaChecks
+  specification:
+    checks:
+      - time_order:
+          condition: recorded_at >= occurred_at
+          severity: CRITICAL
+      - sequence_positive:
+          condition: sequence_number >= 1
+          severity: CRITICAL
+      - event_id_unique:
+          condition: duplicate_count(event_id) = 0
+          severity: CRITICAL
+lineage:
+  upstream:
+    - id: week3-document-refinery-extractions
+  downstream:
+    - id: week7-data-contract-enforcer
+      fields_consumed: [event_id, event_type]

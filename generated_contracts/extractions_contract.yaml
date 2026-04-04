@@ -1,0 +1,33 @@
+apiVersion: v3.0.0
+compatibility: backward
+id: extractions-contract
+info:
+  description: Auto-generated contract with registry integration
+  owner: data-team
+  tags:
+  - auto-generated
+  - production
+  title: Contract for extractions
+  version: 1.0.0
+kind: DataContract
+lineage:
+  downstream:
+  - fields_consumed:
+    - confidence
+    id: week4-cartographer
+  - fields_consumed:
+    - doc_id
+    id: week5-event-sourcing
+quality:
+  specification:
+    checks:
+    - confidence_range:
+        condition: confidence BETWEEN 0.0 AND 1.0
+        severity: CRITICAL
+  type: SodaChecks
+schema:
+  confidence:
+    maximum: 1.0
+    minimum: 0.0
+    required: true
+    type: number

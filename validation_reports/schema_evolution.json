@@ -1,0 +1,40 @@
+{
+  "snapshot_from": "week3_20250301.json",
+  "snapshot_to": "week3_20250401.json",
+  "compatibility_verdict": "BREAKING",
+  "total_changes": 2,
+  "breaking_changes": 2,
+  "changes": [
+    {
+      "type": "TYPE_CHANGE",
+      "field": "confidence",
+      "old_type": "float",
+      "new_type": "integer",
+      "breaking": true,
+      "reason": "Type changed from float to integer - breaks all consumers expecting float"
+    },
+    {
+      "type": "RANGE_CHANGE",
+      "field": "confidence",
+      "old_range": "[0.0, 1.0]",
+      "new_range": "[0, 100]",
+      "breaking": true,
+      "reason": "Range changed from 0.0-1.0 to 0-100 - values now 100x larger"
+    }
+  ],
+  "migration_checklist": [
+    "⚠️ Update all consumers to handle integer confidence values",
+    "⚠️ Convert confidence values: divide by 100 to get 0.0-1.0 scale",
+    "⚠️ Notify all downstream teams: week4-cartographer, week2-digital-courtroom",
+    "⚠️ Replay affected events after migration"
+  ],
+  "rollback_plan": {
+    "steps": [
+      "1. Revert to commit abc1233 (previous version)",
+      "2. Restore from snapshot 20250301",
+      "3. Validate downstream consumers",
+      "4. Replay affected events"
+    ],
+    "estimated_downtime": "30 minutes"
+  }
+}

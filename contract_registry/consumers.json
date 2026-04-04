@@ -1,0 +1,37 @@
+{
+  "consumers": {
+    "week4-cartographer": {
+      "consumer_id": "week4-cartographer",
+      "consumer_name": "Week 4 Brownfield Cartographer",
+      "contract_id": "week3-document-refinery-extractions",
+      "fields_consumed": ["confidence", "doc_id", "extracted_facts"],
+      "required_freshness": "24h",
+      "sla_tolerance": 0.95,
+      "alert_channels": ["slack", "email"],
+      "last_breach": null,
+      "breach_count": 0
+    },
+    "week5-event-sourcing": {
+      "consumer_id": "week5-event-sourcing",
+      "consumer_name": "Week 5 Event Sourcing Platform",
+      "contract_id": "week3-document-refinery-extractions",
+      "fields_consumed": ["doc_id", "extracted_facts"],
+      "required_freshness": "1h",
+      "sla_tolerance": 0.99,
+      "alert_channels": ["slack", "email"],
+      "last_breach": null,
+      "breach_count": 0
+    },
+    "week2-digital-courtroom": {
+      "consumer_id": "week2-digital-courtroom",
+      "consumer_name": "Week 2 Digital Courtroom",
+      "contract_id": "week3-document-refinery-extractions",
+      "fields_consumed": ["confidence"],
+      "required_freshness": "12h",
+      "sla_tolerance": 0.90,
+      "alert_channels": ["slack"],
+      "last_breach": null,
+      "breach_count": 0
+    }
+  }
+}
