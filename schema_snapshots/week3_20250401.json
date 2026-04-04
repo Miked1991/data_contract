@@ -1,6 +1,0 @@
-{
-  "timestamp": "2025-04-01T10:00:00",
-  "schema": {
-    "confidence": {"type": "integer", "minimum": 0, "maximum": 100}
-  }
-}

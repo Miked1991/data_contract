@@ -1,5 +1,5 @@
-{"verdict_id": "v-001", "overall_verdict": "PASS", "confidence": 0.95, "overall_score": 4.5, "evaluated_at": "2025-04-01T10:00:00Z"}
-{"verdict_id": "v-002", "overall_verdict": "PASS", "confidence": 0.92, "overall_score": 4.2, "evaluated_at": "2025-04-01T10:05:00Z"}
-{"verdict_id": "v-003", "overall_verdict": "FAIL", "confidence": 0.78, "overall_score": 2.5, "evaluated_at": "2025-04-01T10:10:00Z"}
-{"verdict_id": "v-004", "overall_verdict": "WARN", "confidence": 0.85, "overall_score": 3.2, "evaluated_at": "2025-04-01T10:15:00Z"}
-{"verdict_id": "v-005", "overall_verdict": "PASS", "confidence": 0.98, "overall_score": 4.8, "evaluated_at": "2025-04-01T10:20:00Z"}
+{"verdict_id": "v1", "overall_verdict": "PASS", "confidence": 0.95, "overall_score": 4.5}
+{"verdict_id": "v2", "overall_verdict": "FAIL", "confidence": 0.78, "overall_score": 2.5}
+{"verdict_id": "v3", "overall_verdict": "PASS", "confidence": 0.92, "overall_score": 4.2}
+{"verdict_id": "v4", "overall_verdict": "WARN", "confidence": 0.85, "overall_score": 3.0}
+{"verdict_id": "v5", "overall_verdict": "PASS", "confidence": 0.98, "overall_score": 4.8}

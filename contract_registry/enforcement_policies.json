@@ -1,5 +1,5 @@
 {
-  "default_mode": "monitor",
+  "default_mode": "warn",
   "global_thresholds": {
     "max_violation_rate": 0.05,
     "max_critical_violations": 0,
@@ -7,9 +7,20 @@
   },
   "per_contract_overrides": {},
   "alert_routing": {
-    "critical": ["pagerduty", "slack", "email"],
-    "high": ["slack", "email"],
-    "medium": ["slack"],
-    "low": ["log"]
+    "critical": [
+      "pagerduty",
+      "slack",
+      "email"
+    ],
+    "high": [
+      "slack",
+      "email"
+    ],
+    "medium": [
+      "slack"
+    ],
+    "low": [
+      "log"
+    ]
   }
 }

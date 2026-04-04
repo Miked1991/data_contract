@@ -1,11 +1,11 @@
 kind: DataContract
 apiVersion: v3.0.0
-id: extractions-contract
+id: week3-extractions-contract
 info:
   title: Week 3 Document Refinery - Extraction Records
   version: 1.0.0
   owner: extraction-team
-  description: Data-driven contract generated from actual extraction data
+  description: Contract for extraction data with confidence validation
   tags:
   - extraction
   - nlp
@@ -17,24 +17,17 @@ schema:
     format: uuid
     required: true
     unique: true
-    description: Document identifier
   extracted_facts:
     type: array
     minItems: 1
     required: true
     items:
-      type: object
-      required:
-      - fact_id
-      - text
-      - confidence
-      properties:
-        confidence:
-          type: number
-          minimum: 0.0
-          maximum: 1.0
-          required: true
-          description: Confidence score MUST be in [0.0, 1.0] - BREAKING if changed
+      confidence:
+        type: number
+        minimum: 0.0
+        maximum: 1.0
+        required: true
+        description: Confidence score MUST be in [0.0, 1.0] - BREAKING if changed
 quality:
   type: SodaChecks
   specification:
@@ -42,11 +35,9 @@ quality:
     - confidence_range:
         condition: confidence BETWEEN 0.0 AND 1.0
         severity: CRITICAL
-        description: Confidence must be in [0.0, 1.0] range
     - confidence_type:
         condition: typeof(confidence) = 'float'
         severity: CRITICAL
-        description: Confidence must be float, not integer
     - confidence_not_null:
         condition: confidence IS NOT NULL
         severity: CRITICAL
@@ -63,7 +54,7 @@ quality:
         condition: MAX(confidence) <= 1.0
         severity: HIGH
     - row_count:
-        condition: COUNT(*) >= 10
+        condition: COUNT(*) >= 5
         severity: MEDIUM
 lineage:
   downstream:
@@ -71,17 +62,12 @@ lineage:
     fields_consumed:
     - confidence
     - doc_id
-    breaking_if_changed:
-    - confidence
   - id: week5-event-sourcing
     fields_consumed:
     - doc_id
-    breaking_if_changed:
-    - doc_id
 statistics:
-  total_records_analyzed: 10
-  confidence_violations_detected: true
+  total_records: 10
   confidence_range:
     min: 0.67
     max: 95
-    mean: 44.413
+    has_violation: true

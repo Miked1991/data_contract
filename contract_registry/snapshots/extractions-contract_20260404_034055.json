@@ -1,0 +1,36 @@
+{
+  "contract_id": "extractions-contract",
+  "version": "1.0.0",
+  "schema": {
+    "doc_id": {
+      "type": "string",
+      "format": "uuid",
+      "required": true,
+      "unique": true,
+      "description": "Document identifier"
+    },
+    "extracted_facts": {
+      "type": "array",
+      "minItems": 1,
+      "required": true,
+      "items": {
+        "type": "object",
+        "required": [
+          "fact_id",
+          "text",
+          "confidence"
+        ],
+        "properties": {
+          "confidence": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "required": true,
+            "description": "Confidence score MUST be in [0.0, 1.0] - BREAKING if changed"
+          }
+        }
+      }
+    }
+  },
+  "timestamp": "2026-04-04T03:40:55.961224"
+}

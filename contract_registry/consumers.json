@@ -3,35 +3,52 @@
     "week4-cartographer": {
       "consumer_id": "week4-cartographer",
       "consumer_name": "Week 4 Brownfield Cartographer",
-      "contract_id": "week3-document-refinery-extractions",
-      "fields_consumed": ["confidence", "doc_id", "extracted_facts"],
+      "contract_id": "week3-extractions-contract",
+      "fields_consumed": [
+        "confidence",
+        "doc_id"
+      ],
       "required_freshness": "24h",
       "sla_tolerance": 0.95,
-      "alert_channels": ["slack", "email"],
+      "alert_channels": [
+        "slack"
+      ],
       "last_breach": null,
-      "breach_count": 0
+      "breach_count": 0,
+      "criticality": "high"
     },
     "week5-event-sourcing": {
       "consumer_id": "week5-event-sourcing",
-      "consumer_name": "Week 5 Event Sourcing Platform",
-      "contract_id": "week3-document-refinery-extractions",
-      "fields_consumed": ["doc_id", "extracted_facts"],
+      "consumer_name": "Week 5 Event Sourcing",
+      "contract_id": "week3-extractions-contract",
+      "fields_consumed": [
+        "doc_id"
+      ],
       "required_freshness": "1h",
       "sla_tolerance": 0.99,
-      "alert_channels": ["slack", "email"],
+      "alert_channels": [
+        "slack",
+        "email"
+      ],
       "last_breach": null,
-      "breach_count": 0
+      "breach_count": 0,
+      "criticality": "high"
     },
     "week2-digital-courtroom": {
       "consumer_id": "week2-digital-courtroom",
       "consumer_name": "Week 2 Digital Courtroom",
-      "contract_id": "week3-document-refinery-extractions",
-      "fields_consumed": ["confidence"],
+      "contract_id": "week3-extractions-contract",
+      "fields_consumed": [
+        "confidence"
+      ],
       "required_freshness": "12h",
-      "sla_tolerance": 0.90,
-      "alert_channels": ["slack"],
+      "sla_tolerance": 0.9,
+      "alert_channels": [
+        "slack"
+      ],
       "last_breach": null,
-      "breach_count": 0
+      "breach_count": 0,
+      "criticality": "medium"
     }
   }
 }

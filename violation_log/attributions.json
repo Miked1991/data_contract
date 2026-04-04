@@ -1,8 +1,9 @@
 [
   {
-    "violation_id": "v-001",
-    "contract_id": "week3-document-refinery-extractions",
-    "detected_at": "2026-04-04T10:05:00",
+    "violation_id": "v_20260404_155429_0",
+    "contract_id": "week3-extractions-contract",
+    "check_id": "confidence.range",
+    "detected_at": "2026-04-04T15:54:29.502558",
     "blame_chain": [
       {
         "rank": 1,
@@ -15,28 +16,41 @@
         "hop_distance": 0
       }
     ],
-    "consumer_impact": {
-      "contract_id": "week3-document-refinery-extractions",
+    "blast_radius": {
       "affected_consumers": [
-        {
-          "consumer_id": "week4-cartographer",
-          "consumer_name": "Week 4 Brownfield Cartographer",
-          "affected_fields": ["confidence"],
-          "sla_tolerance": 0.95,
-          "breach_count": 1
-        },
-        {
-          "consumer_id": "week2-digital-courtroom",
-          "consumer_name": "Week 2 Digital Courtroom",
-          "affected_fields": ["confidence"],
-          "sla_tolerance": 0.90,
-          "breach_count": 1
-        }
+        "week4-cartographer",
+        "week2-digital-courtroom"
       ],
-      "total_impact_score": 20,
+      "estimated_records": 10,
       "requires_rollback": false
     },
-    "recommended_action": "NOTIFY_CONSUMERS",
-    "enforcement_mode": "warn"
+    "recommended_action": "NOTIFY_CONSUMERS"
+  },
+  {
+    "violation_id": "v_20260404_155429_1",
+    "contract_id": "week3-extractions-contract",
+    "check_id": "confidence.type",
+    "detected_at": "2026-04-04T15:54:29.502558",
+    "blame_chain": [
+      {
+        "rank": 1,
+        "file_path": "src/extractor.py",
+        "commit_hash": "abc1234def56789",
+        "author": "extraction-team@example.com",
+        "commit_timestamp": "2025-03-15T14:23:00",
+        "commit_message": "feat: change confidence to percentage scale",
+        "confidence_score": 0.85,
+        "hop_distance": 0
+      }
+    ],
+    "blast_radius": {
+      "affected_consumers": [
+        "week4-cartographer",
+        "week2-digital-courtroom"
+      ],
+      "estimated_records": 10,
+      "requires_rollback": false
+    },
+    "recommended_action": "NOTIFY_CONSUMERS"
   }
 ]

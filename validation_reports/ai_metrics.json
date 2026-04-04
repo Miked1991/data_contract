@@ -1,5 +1,5 @@
 {
-  "run_timestamp": "2026-04-04T10:10:00",
+  "run_timestamp": "2026-04-04T15:54:29.530483",
   "embedding_drift": {
     "sample_size": 200,
     "drift_score": 0.08,

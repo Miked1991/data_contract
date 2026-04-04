@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-04-04T15:54:29.512532",
+  "contract_id": "week3-extractions-contract",
+  "schema": {
+    "confidence": {
+      "type": "float",
+      "minimum": 0.0,
+      "maximum": 1.0
+    }
+  },
+  "version": "1.0.0"
+}

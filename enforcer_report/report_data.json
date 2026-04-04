@@ -1,55 +1,71 @@
 {
-  "report_id": "final-report-20260404",
-  "generated_at": "2026-04-04T10:15:00",
-  "data_health_score": 68,
-  "narrative": "Good data health. Critical violations detected in confidence scale but monitoring active. Week 5 events fully compliant.",
+  "report_id": "enforcer_20260404_155429",
+  "generated_at": "2026-04-04T15:54:29.538462",
+  "data_health_score": 30.0,
+  "narrative": "Poor data health. Critical violations need immediate remediation.",
   "statistics": {
-    "total_validation_runs": 2,
-    "total_violations": 3,
+    "total_validations": 1,
+    "total_violations": 2,
     "critical_violations": 2,
-    "high_violations": 1,
-    "contracts_active": 2,
+    "high_violations": 0,
+    "contracts_active": 1,
     "consumers_registered": 3
   },
   "violations_this_week": {
-    "count": 3,
-    "by_severity": {"CRITICAL": 2, "HIGH": 1, "MEDIUM": 0},
+    "count": 2,
+    "by_severity": {
+      "CRITICAL": 2,
+      "HIGH": 0,
+      "MEDIUM": 0
+    },
     "top_violations": [
       {
         "check_id": "confidence.range",
         "severity": "CRITICAL",
-        "message": "3 confidence values are on 0-100 scale (92, 92, 73) instead of 0.0-1.0. This breaks Week 4 Cartographer filtering logic.",
-        "records_affected": 3
+        "message": "5 confidence values outside [0.0, 1.0] range",
+        "plain_language": "Found 5 confidence values on 0-100 scale instead of 0.0-1.0. This breaks all downstream consumers that expect values between 0 and 1.",
+        "records_affected": 5
       },
       {
         "check_id": "confidence.type",
         "severity": "CRITICAL",
-        "message": "5 confidence values are integers instead of floats. Type mismatch causes silent failures in all downstream consumers.",
+        "message": "Found 5 integer confidence values (should be float)",
+        "plain_language": "Found integer confidence values where floats are expected. This causes type mismatch errors in consumers.",
         "records_affected": 5
-      },
-      {
-        "check_id": "time_order",
-        "severity": "HIGH",
-        "message": "2 events have recorded_at before occurred_at. Violates event sourcing immutability principle.",
-        "records_affected": 2
       }
     ]
   },
   "ai_risk_assessment": {
-    "embedding_drift": {"drift_score": 0.08, "status": "PASS"},
-    "llm_output": {"violation_rate": 0.01, "status": "PASS", "trend": "falling"},
+    "embedding_drift": {
+      "sample_size": 200,
+      "drift_score": 0.08,
+      "similarity": 0.92,
+      "threshold": 0.15,
+      "status": "PASS",
+      "message": "Embedding drift within acceptable bounds"
+    },
+    "llm_output": {
+      "total_outputs": 100,
+      "schema_violations": 1,
+      "violation_rate": 0.01,
+      "baseline_rate": 0.0142,
+      "trend": "falling",
+      "status": "PASS"
+    },
     "overall_status": "PASS"
   },
   "registry_summary": {
-    "total_contracts": 2,
+    "total_contracts": 1,
     "total_consumers": 3,
-    "enforcement_modes": {"week3": "warn", "week5": "enforce"}
+    "enforcement_modes": {
+      "week3": "warn"
+    }
   },
   "recommended_actions": [
     {
       "priority": 1,
       "action": "Fix confidence scale in extraction pipeline",
-      "details": "Update extractor.py line 156 to output float in [0.0, 1.0] instead of integer 0-100",
+      "details": "Update extractor.py to output float in [0.0, 1.0] instead of integer 0-100",
       "risk_reduction": "Eliminates CRITICAL violations affecting 2 downstream consumers",
       "owner": "extraction-team",
       "due_date": "2026-04-11"
@@ -58,7 +74,7 @@
       "priority": 2,
       "action": "Convert existing confidence values",
       "details": "Run migration script to convert existing 0-100 values to 0.0-1.0 scale",
-      "risk_reduction": "Fixes 8 existing records with scale issues",
+      "risk_reduction": "Fixes existing records with scale issues",
       "owner": "data-platform",
       "due_date": "2026-04-07"
     },
