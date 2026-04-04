@@ -3,7 +3,7 @@
     "week4-cartographer": {
       "consumer_id": "week4-cartographer",
       "consumer_name": "Week 4 Brownfield Cartographer",
-      "contract_id": "week3-extractions-contract",
+      "contract_id": "extraction_ledger_contract",
       "fields_consumed": [
         "confidence",
         "doc_id"
@@ -19,8 +19,8 @@
     },
     "week5-event-sourcing": {
       "consumer_id": "week5-event-sourcing",
-      "consumer_name": "Week 5 Event Sourcing",
-      "contract_id": "week3-extractions-contract",
+      "consumer_name": "Week 5 Event Sourcing Platform",
+      "contract_id": "extraction_ledger_contract",
       "fields_consumed": [
         "doc_id"
       ],
@@ -37,7 +37,7 @@
     "week2-digital-courtroom": {
       "consumer_id": "week2-digital-courtroom",
       "consumer_name": "Week 2 Digital Courtroom",
-      "contract_id": "week3-extractions-contract",
+      "contract_id": "extraction_ledger_contract",
       "fields_consumed": [
         "confidence"
       ],

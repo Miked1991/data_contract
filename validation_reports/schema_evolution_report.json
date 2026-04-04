@@ -1,0 +1,42 @@
+{
+  "snapshot_from": "baseline_20250301.json",
+  "snapshot_to": "current_20260404.json",
+  "compatibility_verdict": "BREAKING",
+  "total_changes": 2,
+  "breaking_changes": 2,
+  "changes": [
+    {
+      "type": "TYPE_CHANGE",
+      "field": "confidence",
+      "old_value": "float",
+      "new_value": "integer",
+      "breaking": true,
+      "reason": "Float to integer conversion breaks all consumers expecting decimal values"
+    },
+    {
+      "type": "RANGE_CHANGE",
+      "field": "confidence",
+      "old_value": "[0.0, 1.0]",
+      "new_value": "[0, 100]",
+      "breaking": true,
+      "reason": "Range expanded/narrowed - values now 100x larger"
+    }
+  ],
+  "migration_checklist": [
+    "\u26a0\ufe0f Update all consumers to handle integer confidence values",
+    "\u26a0\ufe0f Convert confidence values: divide by 100 to get 0.0-1.0 scale",
+    "\u26a0\ufe0f Update Week 4 Cartographer filtering logic",
+    "\u26a0\ufe0f Notify all downstream teams: extraction-team, data-platform",
+    "\u26a0\ufe0f Run migration script on historical data"
+  ],
+  "rollback_plan": {
+    "steps": [
+      "1. Revert commit abc1233 (previous version)",
+      "2. Restore from baseline snapshot 20250301",
+      "3. Re-validate all downstream consumers",
+      "4. Replay affected events from last 30 days"
+    ],
+    "estimated_downtime": "30 minutes",
+    "rollback_complexity": "MEDIUM"
+  }
+}

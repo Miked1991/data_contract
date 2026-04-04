@@ -1,0 +1,15 @@
+models:
+- columns:
+  - name: doc_id
+    tests:
+    - not_null
+    - unique
+  - name: confidence
+    tests:
+    - not_null
+    - dbt_utils.accepted_range:
+        max_value: 1.0
+        min_value: 0.0
+  description: Document extraction records
+  name: extraction_ledger_extractions
+version: 2

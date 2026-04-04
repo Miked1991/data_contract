@@ -62,8 +62,12 @@ lineage:
     fields_consumed:
     - confidence
     - doc_id
+    breaking_if_changed:
+    - confidence
   - id: week5-event-sourcing
     fields_consumed:
+    - doc_id
+    breaking_if_changed:
     - doc_id
 statistics:
   total_records: 10

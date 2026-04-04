@@ -1,0 +1,52 @@
+{
+  "report_id": "val_20260404_170042",
+  "contract_id": "extraction_ledger_contract",
+  "enforcement_mode": "warn",
+  "run_timestamp": "2026-04-04T17:00:42.448354",
+  "total_checks": 4,
+  "passed": 4,
+  "failed": 0,
+  "results": [
+    {
+      "check_id": "confidence.range",
+      "status": "PASS",
+      "severity": "CRITICAL",
+      "records_failing": 0,
+      "sample_failing": [],
+      "expected": "0.0-1.0",
+      "actual": "no data",
+      "message": "0 confidence values outside [0.0, 1.0] range"
+    },
+    {
+      "check_id": "confidence.type",
+      "status": "PASS",
+      "severity": "CRITICAL",
+      "records_failing": 0,
+      "sample_failing": [],
+      "expected": "float",
+      "actual": "0 integer values",
+      "message": "Found 0 integer confidence values (should be float)"
+    },
+    {
+      "check_id": "doc_id.required",
+      "status": "PASS",
+      "severity": "CRITICAL",
+      "records_failing": 0,
+      "message": "0 records missing doc_id"
+    },
+    {
+      "check_id": "row_count",
+      "status": "PASS",
+      "severity": "MEDIUM",
+      "records_failing": 0,
+      "message": "Found 45 records (need at least 5)"
+    }
+  ],
+  "data_summary": {
+    "total_records": 45,
+    "confidence_count": 0,
+    "confidence_min": null,
+    "confidence_max": null,
+    "confidence_mean": null
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "report_id": "val_20260404_160713",
+  "contract_id": "week3-extractions-contract",
+  "enforcement_mode": "warn",
+  "run_timestamp": "2026-04-04T16:07:13.792859",
+  "total_checks": 4,
+  "passed": 2,
+  "failed": 2,
+  "results": [
+    {
+      "check_id": "confidence.range",
+      "status": "FAIL",
+      "severity": "CRITICAL",
+      "records_failing": 5,
+      "sample_failing": [
+        92,
+        92,
+        73,
+        88,
+        95
+      ],
+      "expected": "0.0-1.0",
+      "actual": "min=0.67, max=95.00",
+      "message": "5 confidence values outside [0.0, 1.0] range"
+    },
+    {
+      "check_id": "confidence.type",
+      "status": "FAIL",
+      "severity": "CRITICAL",
+      "records_failing": 5,
+      "sample_failing": [
+        92,
+        92,
+        73,
+        88,
+        95
+      ],
+      "expected": "float",
+      "actual": "5 integer values",
+      "message": "Found 5 integer confidence values (should be float)"
+    },
+    {
+      "check_id": "doc_id.required",
+      "status": "PASS",
+      "severity": "CRITICAL",
+      "records_failing": 0,
+      "message": "0 records missing doc_id"
+    },
+    {
+      "check_id": "row_count",
+      "status": "PASS",
+      "severity": "MEDIUM",
+      "records_failing": 0,
+      "message": "Found 10 records (need at least 5)"
+    }
+  ],
+  "data_summary": {
+    "total_records": 10,
+    "confidence_count": 10,
+    "confidence_min": 0.67,
+    "confidence_max": 95,
+    "confidence_mean": 44.413
+  }
+}

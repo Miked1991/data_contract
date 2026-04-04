@@ -1,12 +1,13 @@
 {
   "timestamp": "2025-03-01T10:00:00",
-  "contract_id": "week3-extractions-contract",
+  "contract_id": "extraction_ledger_contract",
+  "version": "1.0.0",
   "schema": {
     "confidence": {
       "type": "float",
       "minimum": 0.0,
-      "maximum": 1.0
+      "maximum": 1.0,
+      "required": true
     }
-  },
-  "version": "1.0.0"
+  }
 }

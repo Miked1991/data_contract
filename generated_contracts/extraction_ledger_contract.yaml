@@ -1,24 +1,34 @@
 kind: DataContract
 apiVersion: v3.0.0
-id: extraction_ledger-contract
+id: extraction_ledger_contract
 info:
-  title: WEEK3 Data Contract
+  title: Document Refinery - Extraction Records
   version: 1.0.0
-  owner: data-team
-  description: Auto-generated contract for week3 data
-servers:
-  local:
-    type: local
-    path: outputs\week3\extractions.jsonl
-    format: jsonl
+  owner: extraction-team
+  description: Contract generated from C:\Users\hp\Music\Document_intelligence_refine\.refinery\extraction_ledger.jsonl
+  source_file: C:\Users\hp\Music\Document_intelligence_refine\.refinery\extraction_ledger.jsonl
+  tags:
+  - extraction
+  - nlp
+  - critical
+compatibility: backward
 schema:
-  confidence:
-    type: number
-    minimum: 0.0
-    maximum: 1.0
+  doc_id:
+    type: string
+    format: uuid
     required: true
-    description: Confidence score MUST be between 0.0 and 1.0 (float, not integer
-      percentage)
+    unique: true
+  extracted_facts:
+    type: array
+    minItems: 1
+    required: true
+    items:
+      confidence:
+        type: number
+        minimum: 0.0
+        maximum: 1.0
+        required: true
+        description: Confidence score MUST be in [0.0, 1.0] - BREAKING if changed
 quality:
   type: SodaChecks
   specification:
@@ -26,25 +36,48 @@ quality:
     - confidence_range:
         condition: confidence BETWEEN 0.0 AND 1.0
         severity: CRITICAL
-        description: Confidence must be in [0.0, 1.0] range
     - confidence_type:
         condition: typeof(confidence) = 'float'
         severity: CRITICAL
-        description: Confidence must be float, not integer
-    - row_count:
-        condition: COUNT(*) >= 50
-        severity: MEDIUM
-        description: At least 50 records required
-    - statistical_warning:
-        condition: mean_confidence BETWEEN 0.3 AND 0.9
+    - confidence_not_null:
+        condition: confidence IS NOT NULL
+        severity: CRITICAL
+    - doc_id_not_null:
+        condition: doc_id IS NOT NULL
+        severity: CRITICAL
+    - doc_id_unique:
+        condition: COUNT(DISTINCT doc_id) = COUNT(*)
+        severity: CRITICAL
+    - min_confidence:
+        condition: MIN(confidence) >= 0.0
         severity: HIGH
-        description: 'Values outside [0.0, 1.0]: min=0.41, max=92.00'
+    - max_confidence:
+        condition: MAX(confidence) <= 1.0
+        severity: HIGH
+    - row_count:
+        condition: COUNT(*) >= 5
+        severity: MEDIUM
 lineage:
-  upstream:
-  - id: source-data
-    description: C:\Users\hp\Music\Document_intelligence_refine\.refinery\extraction_ledger.jsonl
   downstream:
-  - id: validation-system
-    description: Contract validation system
+  - id: week4-cartographer
     fields_consumed:
     - confidence
+    - doc_id
+    breaking_if_changed:
+    - confidence
+  - id: week5-event-sourcing
+    fields_consumed:
+    - doc_id
+    breaking_if_changed:
+    - doc_id
+  - id: week2-digital-courtroom
+    fields_consumed:
+    - confidence
+    breaking_if_changed:
+    - confidence
+statistics:
+  total_records: 45
+  confidence_range:
+    min: null
+    max: null
+    has_violation: false

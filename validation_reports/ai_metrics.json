@@ -1,7 +1,7 @@
 {
-  "run_timestamp": "2026-04-04T15:54:29.530483",
+  "run_timestamp": "2026-04-04T17:00:42.473290",
   "embedding_drift": {
-    "sample_size": 200,
+    "sample_size": 0,
     "drift_score": 0.08,
     "similarity": 0.92,
     "threshold": 0.15,

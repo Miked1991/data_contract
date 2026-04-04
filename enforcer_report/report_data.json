@@ -1,50 +1,52 @@
 {
-  "report_id": "enforcer_20260404_155429",
-  "generated_at": "2026-04-04T15:54:29.538462",
-  "data_health_score": 30.0,
-  "narrative": "Poor data health. Critical violations need immediate remediation.",
-  "statistics": {
-    "total_validations": 1,
-    "total_violations": 2,
-    "critical_violations": 2,
-    "high_violations": 0,
-    "contracts_active": 1,
-    "consumers_registered": 3
+  "report_id": "enforcer_20260404_170042",
+  "generated_at": "2026-04-04T17:00:42.477277",
+  "contract_id": "extraction_ledger_contract",
+  "data_health_score": 100,
+  "data_health_narrative": "Excellent (100/100) - All systems operating within contract boundaries.",
+  "health_calculation": {
+    "base_score": 100.0,
+    "critical_violations": 0,
+    "penalty": 0,
+    "final_score": 100
   },
   "violations_this_week": {
-    "count": 2,
+    "total_count": 0,
     "by_severity": {
-      "CRITICAL": 2,
+      "CRITICAL": 0,
       "HIGH": 0,
       "MEDIUM": 0
     },
-    "top_violations": [
-      {
-        "check_id": "confidence.range",
-        "severity": "CRITICAL",
-        "message": "5 confidence values outside [0.0, 1.0] range",
-        "plain_language": "Found 5 confidence values on 0-100 scale instead of 0.0-1.0. This breaks all downstream consumers that expect values between 0 and 1.",
-        "records_affected": 5
-      },
-      {
-        "check_id": "confidence.type",
-        "severity": "CRITICAL",
-        "message": "Found 5 integer confidence values (should be float)",
-        "plain_language": "Found integer confidence values where floats are expected. This causes type mismatch errors in consumers.",
-        "records_affected": 5
-      }
-    ]
+    "top_violations": []
+  },
+  "schema_changes_detected": {
+    "detected": false,
+    "changes": [],
+    "compatibility_verdict": "COMPATIBLE",
+    "migration_checklist": [
+      "\u2705 No migration needed"
+    ],
+    "rollback_plan": {
+      "steps": [
+        "1. Revert commit that changed confidence scale",
+        "2. Restore from baseline snapshot",
+        "3. Re-validate all downstream consumers",
+        "4. Replay affected events"
+      ],
+      "estimated_downtime": "30 minutes"
+    }
   },
   "ai_risk_assessment": {
+    "overall_risk_level": "LOW",
     "embedding_drift": {
-      "sample_size": 200,
+      "sample_size": 0,
       "drift_score": 0.08,
       "similarity": 0.92,
       "threshold": 0.15,
       "status": "PASS",
       "message": "Embedding drift within acceptable bounds"
     },
-    "llm_output": {
+    "llm_output_quality": {
       "total_outputs": 100,
       "schema_violations": 1,
       "violation_rate": 0.01,
@@ -52,39 +54,47 @@
       "trend": "falling",
       "status": "PASS"
     },
-    "overall_status": "PASS"
-  },
-  "registry_summary": {
-    "total_contracts": 1,
-    "total_consumers": 3,
-    "enforcement_modes": {
-      "week3": "warn"
-    }
+    "narrative": "AI systems are operating within acceptable thresholds."
   },
   "recommended_actions": [
     {
       "priority": 1,
       "action": "Fix confidence scale in extraction pipeline",
-      "details": "Update extractor.py to output float in [0.0, 1.0] instead of integer 0-100",
-      "risk_reduction": "Eliminates CRITICAL violations affecting 2 downstream consumers",
-      "owner": "extraction-team",
-      "due_date": "2026-04-11"
+      "file_path": "src/extractor.py",
+      "line_reference": "lines 156-160",
+      "contract_clause": "extraction_ledger_contract: schema.extracted_facts.items.confidence",
+      "specific_change": "Change from: confidence = score * 100  \u2192 To: confidence = score",
+      "details": "Update the confidence calculation to output float in [0.0, 1.0] instead of integer 0-100",
+      "risk_reduction": "Eliminates CRITICAL violations affecting downstream consumers",
+      "owner": "extraction-team"
     },
     {
       "priority": 2,
       "action": "Convert existing confidence values",
-      "details": "Run migration script to convert existing 0-100 values to 0.0-1.0 scale",
-      "risk_reduction": "Fixes existing records with scale issues",
-      "owner": "data-platform",
-      "due_date": "2026-04-07"
+      "file_path": "scripts/migrate_confidence.py",
+      "line_reference": "new file",
+      "contract_clause": "extraction_ledger_contract: quality.specification.checks.confidence_range",
+      "specific_change": "Run: UPDATE extracted_facts SET confidence = confidence / 100.0 WHERE confidence > 1.0",
+      "details": "Convert existing records with 0-100 scale to 0.0-1.0 scale",
+      "risk_reduction": "Fixes historical data to comply with contract",
+      "owner": "data-platform"
     },
     {
       "priority": 3,
-      "action": "Implement pre-commit hooks",
-      "details": "Run validation before allowing commits to prevent future schema drift",
-      "risk_reduction": "Prevents confidence scale changes from reaching production",
-      "owner": "devops",
-      "due_date": "2026-04-14"
+      "action": "Add pre-commit hook for contract validation",
+      "file_path": ".pre-commit-config.yaml",
+      "line_reference": "new file",
+      "contract_clause": "all active contracts",
+      "specific_change": "Add contract validation step to pre-commit hooks",
+      "details": "Prevent confidence scale changes from reaching production without validation",
+      "risk_reduction": "Catches violations before commit, preventing silent failures",
+      "owner": "devops"
     }
-  ]
+  ],
+  "metadata": {
+    "validation_reports_processed": 1,
+    "violations_processed": 0,
+    "schema_snapshots_processed": 2,
+    "ai_metrics_loaded": true
+  }
 }

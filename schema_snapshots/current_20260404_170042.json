@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-04-04T17:00:42.463315",
+  "contract_id": "extraction_ledger_contract",
+  "version": "1.0.0",
+  "schema": {
+    "confidence": {
+      "type": "float",
+      "minimum": 0,
+      "maximum": 1,
+      "required": true
+    }
+  },
+  "violations_detected": false,
+  "actual_confidence_range": {
+    "min": null,
+    "max": null
+  }
+}
